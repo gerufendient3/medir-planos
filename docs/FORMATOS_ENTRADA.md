@@ -38,7 +38,7 @@ Alternativa descartada: **LibreDWG** (GPL, sin dependencias externas). No la
 evalué a fondo y ezdxf no tiene integración directa. Reversible si se necesita:
 es una dependencia distinta, no un cambio de arquitectura.
 
-## PDF vectorial: viable conومات Reservadas
+## PDF vectorial: viable con reservas
 
 Un PDF generado por CAD conserva la geometría como vectores, no como mapa de
 bits. Eso significa que sí se puede medir.

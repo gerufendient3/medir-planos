@@ -152,7 +152,7 @@ cambia el código y rompe una, la suite falla.
 |---|---|
 | Se procesa **en memoria**, no se escribe a disco | `test_el_archivo_subido_no_se_conserva`, `test_la_unica_escritura_es_el_temporal_del_archivo_subido` |
 | Si algo falla, el archivo temporal se borra igual | `test_el_temporal_se_borra_si_falla` |
-| Los resultados solo viven en memoria | `test_la_sesion_no_persiste_el_archivo_original` |
+| Los resultados solo viven en memoria | `test_la_sesion_no_guarda_el_archivo_original` |
 | Sin cuentas ni base de datos | `test_no_hay_persistencia_de_sesiones` |
 | Nada sale a otros servidores | `test_sin_imports_de_red_en_la_app`, `test_sin_imports_de_red_en_la_interfaz` |
 | Sin analítica ni scripts de terceros | `test_no_hay_analitica_ni_scripts_de_terceros` |

@@ -314,6 +314,81 @@ def test_el_indice_de_casos_coincide_con_la_suite():
     assert r.returncode == 0, r.stdout + r.stderr
 
 
+def test_los_documentos_no_citan_pruebas_que_no_existen():
+    """Un documento que dice "esto lo respalda la prueba X" es una afirmación.
+
+    Si X no existe, el documento miente justo en la parte que pretende
+    probar. Pasó: el documento de cierre citaba seis pruebas con nombres
+    inventados, uno de ellos con falta de ortografía.
+
+    Incluye el propio archivo de pruebas: si alguien renombra un test, esto
+    falla en vez de dejar la referencia colgando.
+    """
+    import subprocess
+    import sys
+
+    documentos = ["CIERRE.md", "README.md", "CONTRIBUTING.md",
+                  "docs/CASOS.md", "docs/VERIFICACION.md",
+                  "publico/README.md"]
+    existentes = [d for d in documentos if (RAIZ / d).exists()]
+    assert existentes, "no se encontró ningún documento que verificar"
+
+    r = subprocess.run(
+        [sys.executable, str(RAIZ / "scripts" / "verificar_citas_de_pruebas.py"),
+         *existentes],
+        cwd=str(RAIZ), capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_la_documentacion_no_trae_texto_de_otro_idioma():
+    """La documentación es pública: no puede llevar fragmentos sin traducir.
+
+    Ha pasado varias veces durante el desarrollo, casi siempre al copiar
+    código a un archivo: se quedan palabras en inglés o de otro idioma
+    mezcladas con el español. Passa desapercibido en lectura rápida y se ve
+    nada más publicar.
+    """
+    rangos = {
+        "chino": r"[\u4e00-\u9fff]",
+        "cirilico": r"[\u0400-\u04ff]",
+        "hebreo": r"[\u0590-\u05ff]",
+        "arabe": r"[\u0600-\u06ff]",
+        "devanagari": r"[\u0900-\u097f]",
+        "japones": r"[\u3040-\u30ff]",
+        "coreano": r"[\uac00-\ud7af]",
+    }
+    # Palabras inglesas que no deberían aparecer en prosa española. Se
+    # permiten dentro de nombres de archivo, comandos, identificadores y
+    # nombres propios de librería.
+    #
+    # Solo palabras inequívocamente inglesas: "simple", "partial" y "note"
+    # también son español válido y darían falsos positivos.
+    ingles = re.compile(
+        r"\b(?:Many|insert|includes|Factors|threshold|should|must|"
+        r"broken|enabled|enable[sd]?|the above|this way|note that|"
+        r"and so on|as well as)\b")
+
+    documentos = ["CIERRE.md", "IDEAS.md", "README.md", "CONTRIBUTING.md",
+                  "LICENSE", "docs/CASOS.md", "docs/DECISIONES.md",
+                  "docs/FUENTES.md", "docs/VERIFICACION.md",
+                  "docs/CASO_ESTUDIO.md", "docs/FORMATOS_ENTRADA.md",
+                  "publico/README.md"]
+
+    for nombre in documentos:
+        ruta = RAIZ / nombre
+        if not ruta.exists():
+            continue
+        texto = ruta.read_text(encoding="utf-8")
+        for etiqueta, patron in rangos.items():
+            m = re.search(patron, texto)
+            assert m is None, "{} tiene texto en {}: ...{}...".format(
+                nombre, etiqueta,
+                texto[max(0, m.start() - 40):m.end() + 40] if m else "")
+        m = ingles.search(texto)
+        assert m is None, "{} tiene inglés sin traducir: '{}'".format(
+            nombre, m.group(0) if m else "")
+
+
 # ------------------------------------------------------------------ varios
 
 def test_no_hay_placeholders_sin_reemplazar(demo: str, landing: str, kit: str):
