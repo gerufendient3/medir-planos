@@ -1,0 +1,60 @@
+name: Otro problema
+description: Instalación, interfaz, documentación, o cualquier otra cosa
+title: ""
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Para un plano que no se midió, usa mejor la plantilla
+        **"Un plano no se midió"**: pide el formato, las capas y la escala, y
+        avisa de no adjuntar el archivo.
+
+  - type: input
+    id: resumen
+    attributes:
+      label: ¿Qué pasa, en una línea?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: zona
+    attributes:
+      label: ¿En qué parte?
+      options:
+        - Instalación
+        - Interfaz web
+        - Lectura de DXF
+        - Lectura de PDF
+        - Lectura de DWG
+        - Exportación (Excel o PDF)
+        - Catálogo y precios
+        - Documentación
+        - No sé
+    validations:
+      required: true
+
+  - type: textarea
+    id: detalle
+    attributes:
+      label: Detalle
+      description: Qué esperabas y qué pasó. Con el mensaje de error tal cual, si lo hay.
+      render: text
+    validations:
+      required: true
+
+  - type: input
+    id: entorno
+    attributes:
+      label: Versión de Python y sistema operativo
+      placeholder: "Python 3.12.10, Windows 11"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: sin_plano
+    attributes:
+      label: Antes de enviar
+      options:
+        - label: No he adjuntado planos de cliente ni datos confidenciales.
+          required: true

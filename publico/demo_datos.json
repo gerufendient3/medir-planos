@@ -1,0 +1,208 @@
+{
+  "caso_a_rasterizado": {
+    "archivo": "pd_escaneado.pdf",
+    "paginas": 5,
+    "ancho_pt": 69,
+    "alto_pt": 95,
+    "lines": 0,
+    "rects": 0,
+    "curves": 0,
+    "chars": 99,
+    "images": 2,
+    "vectorial": false,
+    "advertencias": [
+      "PDF ESCANEADO: la pagina 5 no tiene trazados, solo 2 imagen(es). No se puede medir sin OCR, y este motor no hace OCR. Se requiere el DXF de origen o un PDF vectorial."
+    ],
+    "objetos_vectoriales": 0
+  },
+  "caso_b_vectorial": {
+    "mediciones": [
+      {
+        "capa": "MURO-PISO",
+        "unidades": "m2",
+        "cantidad": 48.0,
+        "handles": [
+          "8D"
+        ],
+        "tipos": [
+          "LWPOLYLINE"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "MURO-PISO",
+        "unidades": "ml",
+        "cantidad": 28.0,
+        "handles": [
+          "8D"
+        ],
+        "tipos": [
+          "LWPOLYLINE"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "MURO-TABIQUE",
+        "unidades": "m",
+        "cantidad": 6.0,
+        "handles": [
+          "8E"
+        ],
+        "tipos": [
+          "LINE"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "PISO-LOSETA",
+        "unidades": "m2",
+        "cantidad": 12.0,
+        "handles": [
+          "8F"
+        ],
+        "tipos": [
+          "LWPOLYLINE"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "PISO-LOSETA",
+        "unidades": "ml",
+        "cantidad": 14.0,
+        "handles": [
+          "8F"
+        ],
+        "tipos": [
+          "LWPOLYLINE"
+        ],
+        "n_entidades": 1
+      }
+    ],
+    "lineas": [
+      {
+        "capa": "MURO-PISO",
+        "clave": "MURO_GENERICO",
+        "concepto": "Muro (acabado por definir)",
+        "unidad": "m2",
+        "cantidad_medida": 48.0,
+        "rendimiento": 1.0,
+        "cantidad_ajustada": 48.0,
+        "precio_unitario": 750.0,
+        "importe": 36000.0,
+        "categoria": "Muros",
+        "estado": "OK",
+        "detalle": "",
+        "handles": [
+          "8D"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "MURO-PISO",
+        "clave": "MURO_GENERICO",
+        "concepto": "Muro (acabado por definir)",
+        "unidad": "ml",
+        "cantidad_medida": 28.0,
+        "rendimiento": 1.0,
+        "cantidad_ajustada": 28.0,
+        "precio_unitario": 750.0,
+        "importe": null,
+        "categoria": "Muros",
+        "estado": "UNIDAD_INCOMPATIBLE",
+        "detalle": "El concepto se cotiza por m2 (acepta ['m2']) pero la capa produjo 28.0000 ml. Linea EXCLUIDA.",
+        "handles": [
+          "8D"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "MURO-TABIQUE",
+        "clave": "TABA_10",
+        "concepto": "Tabique de gypsum de 10 cm",
+        "unidad": "m",
+        "cantidad_medida": 6.0,
+        "rendimiento": 1.0,
+        "cantidad_ajustada": 6.0,
+        "precio_unitario": null,
+        "importe": null,
+        "categoria": "Muros",
+        "estado": "UNIDAD_INCOMPATIBLE",
+        "detalle": "El concepto se cotiza por m2 (acepta ['m2']) pero la capa produjo 6.0000 m. Linea EXCLUIDA.",
+        "handles": [
+          "8E"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "PISO-LOSETA",
+        "clave": "LOSETA",
+        "concepto": "Piso de loseta",
+        "unidad": "m2",
+        "cantidad_medida": 12.0,
+        "rendimiento": 1.08,
+        "cantidad_ajustada": 12.96,
+        "precio_unitario": 320.0,
+        "importe": 4147.2,
+        "categoria": "Pisos",
+        "estado": "OK",
+        "detalle": "",
+        "handles": [
+          "8F"
+        ],
+        "n_entidades": 1
+      },
+      {
+        "capa": "PISO-LOSETA",
+        "clave": "LOSETA",
+        "concepto": "Piso de loseta",
+        "unidad": "ml",
+        "cantidad_medida": 14.0,
+        "rendimiento": 1.0,
+        "cantidad_ajustada": 14.0,
+        "precio_unitario": 320.0,
+        "importe": null,
+        "categoria": "Pisos",
+        "estado": "UNIDAD_INCOMPATIBLE",
+        "detalle": "El concepto se cotiza por m2 (acepta ['m2']) pero la capa produjo 14.0000 ml. Linea EXCLUIDA.",
+        "handles": [
+          "8F"
+        ],
+        "n_entidades": 1
+      }
+    ],
+    "subtotal": 40147.2,
+    "iva": 6423.55,
+    "total": 46570.75,
+    "pt_por_metro": 52.36375
+  },
+  "fuentes": [
+    {
+      "archivo": "pd_escaneado.pdf",
+      "titulo": "Floor plan of a 5-bedroom house (Plan no. 7181)",
+      "autor": "United States. Division of Home Economics, 1965",
+      "licencia": "Dominio publico (obra del gobierno de EE. UU.)",
+      "origen": "https://archive.org/details/CAT31371083"
+    },
+    {
+      "archivo": "harlem_meer_planta.pdf",
+      "titulo": "Harlem Meer Restaurant — First Floor Plan (Drawing #2), 1990",
+      "autor": "MMDA-Photos, Nueva York",
+      "licencia": "CC BY-SA 4.0",
+      "origen": "https://commons.wikimedia.org/wiki/File:Harlem_Meer_Restaurant_Dwg_-2_-_1990-08-01_-_First_Floor_Plan_(2).pdf"
+    },
+    {
+      "archivo": "vectorial_desde_dxf.pdf",
+      "titulo": "Planta vectorial de prueba (geometria conocida)",
+      "autor": "Generado por este proyecto con ezdxf",
+      "licencia": "Dominio publico de las pruebas",
+      "origen": "scripts/generar_pdf_vectorial.py"
+    },
+    {
+      "archivo": "vectorial_origen.dxf",
+      "titulo": "DXF origen del plano vectorial",
+      "autor": "Generado por este proyecto",
+      "licencia": "Dominio publico de las pruebas",
+      "origen": "scripts/generar_pdf_vectorial.py"
+    }
+  ]
+}

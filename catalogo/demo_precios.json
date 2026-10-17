@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "version": "0.1.0",
+    "moneda": "MXN",
+    "que_es": "Precios de EJEMPLO para la demostración pública. No son precios de mercado: no existe fuente pública verificada de precios de obra en México.",
+    "avisos": [
+      "ESTOS PRECIOS SON INVENTADOS: son un ejemplo para que la demostración sea legible. No son precios de mercado, no existe fuente pública verificada de precios de obra en México. No los copies a un presupuesto real.",
+      "El catálogo del proyecto es conceptos.json y viene SIN precios. Este archivo es aparte y existe únicamente para la demo.",
+      "Un concepto sin precio_unitario se marca como FALTA_PRECIO y queda FUERA del total; mientras falte alguno, el total se rotula como incompleto.",
+      "Las expresiones regulares del campo patron_capa mapean nombres de capa a conceptos.",
+      "Los patrones se evalúan en orden y gana la primera coincidencia, sin distinguir mayúsculas de minúsculas.",
+      "Ordena por prioridad descendente antes de usar: los patrones específicos van primero."
+    ]
+  },
+  "conceptos": [
+    {
+      "clave": "MUR_BLOCK_15",
+      "concepto": "Muro de block de 15 cm",
+      "categoria": "Muros",
+      "unidad": "m2",
+      "rendimiento": 1.0,
+      "patron_capa": "MURO-BLOCK-15CM",
+      "prioridad": 10,
+      "precio_unitario": 900.0
+    },
+    {
+      "clave": "MURO_GENERICO",
+      "concepto": "Muro de tabique (genérico)",
+      "categoria": "Muros",
+      "unidad": "m2",
+      "rendimiento": 1.0,
+      "patron_capa": "MURO-GENERICO",
+      "prioridad": 10,
+      "precio_unitario": 750.0
+    },
+    {
+      "clave": "LOSETA",
+      "concepto": "Piso de loseta",
+      "categoria": "Pisos",
+      "unidad": "m2",
+      "rendimiento": 1.08,
+      "patron_capa": "Piso-Loseta",
+      "prioridad": 10,
+      "precio_unitario": 320.0
+    },
+    {
+      "clave": "VINI",
+      "concepto": "Piso vinílico",
+      "categoria": "Pisos",
+      "unidad": "m2",
+      "rendimiento": 1.05,
+      "patron_capa": "PISO-VINILICO",
+      "prioridad": 10,
+      "precio_unitario": 450.0
+    },
+    {
+      "clave": "CIELO_YESO",
+      "concepto": "Cielo de yeso",
+      "categoria": "Plafones",
+      "unidad": "m2",
+      "rendimiento": 1.0,
+      "patron_capa": "CIELO DE YESO",
+      "prioridad": 10,
+      "precio_unitario": 280.0
+    },
+    {
+      "clave": "TUBO_ELEC",
+      "concepto": "Tubería eléctrica (con canalización)",
+      "categoria": "Instalaciones eléctricas",
+      "unidad": "m",
+      "rendimiento": 1.1,
+      "patron_capa": "Canal-Electrico-Piso",
+      "prioridad": 10,
+      "precio_unitario": 95.0
+    },
+    {
+      "clave": "LAMPARA",
+      "concepto": "Luminaria",
+      "categoria": "Instalaciones eléctricas",
+      "unidad": "pza",
+      "rendimiento": 1.0,
+      "patron_capa": "LAMPARA",
+      "prioridad": 10,
+      "precio_unitario": 850.0
+    },
+    {
+      "clave": "TUBO_HIDRO",
+      "concepto": "Tubería hidráulica",
+      "categoria": "Instalaciones hidráulicas",
+      "unidad": "m",
+      "rendimiento": 1.15,
+      "patron_capa": "TUBO-HID",
+      "prioridad": 10,
+      "precio_unitario": 130.0
+    },
+    {
+      "clave": "VENTANA",
+      "concepto": "Ventana",
+      "categoria": "Carpintería",
+      "unidad": "pza",
+      "rendimiento": 1.0,
+      "patron_capa": "VENTANA-A1",
+      "prioridad": 10,
+      "precio_unitario": 2400.0
+    },
+    {
+      "clave": "TABLERO",
+      "concepto": "Tablero de distribución",
+      "categoria": "Instalaciones eléctricas",
+      "unidad": "pza",
+      "rendimiento": 1.0,
+      "patron_capa": "A-C-01",
+      "prioridad": 10,
+      "precio_unitario": 1800.0
+    },
+    {
+      "clave": "COLADERA",
+      "concepto": "Coladera",
+      "categoria": "Instalaciones hidráulicas",
+      "unidad": "pza",
+      "rendimiento": 1.0,
+      "patron_capa": "Coladera",
+      "prioridad": 10,
+      "precio_unitario": 350.0
+    },
+    {
+      "clave": "PUERTA",
+      "concepto": "Puerta",
+      "categoria": "Carpintería",
+      "unidad": "pza",
+      "rendimiento": 1.0,
+      "patron_capa": "PUERTA",
+      "prioridad": 10,
+      "precio_unitario": null
+    },
+    {
+      "clave": "APLANADO",
+      "concepto": "Aplanado de mortero",
+      "categoria": "Muros",
+      "unidad": "m2",
+      "rendimiento": 1.05,
+      "patron_capa": "APLANADO",
+      "prioridad": 10,
+      "precio_unitario": null
+    },
+    {
+      "clave": "CANCEL",
+      "concepto": "Cancel de baño",
+      "categoria": "Carpintería",
+      "unidad": "pza",
+      "rendimiento": 1.0,
+      "patron_capa": "CANCEL",
+      "prioridad": 10,
+      "precio_unitario": null
+    },
+    {
+      "clave": "TINTA_PISO",
+      "concepto": "Pintura de piso",
+      "categoria": "Acabados",
+      "unidad": "m2",
+      "rendimiento": 1.05,
+      "patron_capa": "PINTURA-PISO",
+      "prioridad": 10,
+      "precio_unitario": null
+    }
+  ]
+}

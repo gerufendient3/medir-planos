@@ -1,0 +1,32 @@
+# .gitattributes de "Medir planos" 0.1.0
+#
+# Sin esto, Git convierte los saltos de linea segun la plataforma de quien
+# hace el commit. El resultado es que el mismo archivo tiene finales
+# distintos en Windows y en Linux, y la CI corre en Linux. Marcar los
+# archivos como binarios evita que Git toque los planos y los fixtures.
+
+# Normaliza a LF en el repositorio; en Windows se lee con CRLF.
+* text=auto eol=lf
+
+# Archivos que SI deben tener LF en el arbol de trabajo de Windows.
+*.py   text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.txt  text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+
+# Binarios: Git no debe intentar convertirlos ni deduplicarlos como texto.
+# Los planos y los PDF de ejemplo se versionan porque las pruebas los
+# necesitan; tratarlos como binarios evita corromperlos en cualquier
+# plataforma.
+*.dxf  binary
+*.dwg  binary
+*.pdf  binary
+*.png  binary
+*.xlsx binary
+*.pcap binary
+
+# Los .dxf son texto plano con contenido ISO-8859-1. Git los guardaria tal
+# cual por la regla binary de arriba, que es lo correcto.
+*.dxf -text

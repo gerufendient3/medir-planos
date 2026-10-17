@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cotiza planos en minutos, con la cuenta a la vista</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;margin:0;
+     line-height:1.6;color:#1a1a1a;background:#fff}
+header{background:#1F3A5F;color:#fff;padding:44px 20px}
+header .wrap{max-width:900px;margin:0 auto}
+header h1{font-size:30px;margin:0 0 12px;line-height:1.25}
+header p{font-size:17px;margin:0;opacity:.92}
+main{max-width:900px;margin:0 auto;padding:30px 20px 70px}
+h2{font-size:21px;margin:34px 0 12px;padding-bottom:6px;
+   border-bottom:2px solid #1F3A5F}
+h3{font-size:16px;margin:20px 0 8px}
+ul,ol{padding-left:22px}
+li{margin:5px 0}
+.card{background:#fafafa;border:1px solid #ddd;border-radius:8px;
+      padding:18px;margin:14px 0}
+.aviso{background:#fff9e6;border-left:5px solid #f9a825;padding:12px 16px;
+       margin:12px 0;font-size:14px}
+.bien{background:#f1f8f2;border-left:5px solid #2e7d32;padding:12px 16px;
+      margin:12px 0;font-size:14px}
+.no{background:#fff4f4;border-left:5px solid #9C0006;padding:12px 16px;
+    margin:12px 0;font-size:14px}
+.hiptesis{background:#f3e8ff;border:2px dashed #7c3aed;padding:16px 18px;
+          border-radius:8px;margin:16px 0}
+.hiptesis .precio{font-size:30px;font-weight:800;color:#5b21b6}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0}
+th,td{border:1px solid #d5d5d5;padding:8px 10px;text-align:left}
+th{background:#1F3A5F;color:#fff}
+form{background:#fafafa;border:1px solid #ddd;border-radius:8px;padding:20px}
+label{display:block;font-weight:600;margin:14px 0 5px;font-size:14px}
+input,textarea,select{width:100%;padding:9px;border:1px solid #bbb;
+                      border-radius:4px;font-size:14px;font-family:inherit}
+textarea{min-height:80px}
+button{background:#1F3A5F;color:#fff;border:0;padding:12px 22px;
+       border-radius:5px;font-size:15px;cursor:pointer;margin-top:16px;
+       font-weight:600}
+button:hover{background:#152c47}
+footer{max-width:900px;margin:0 auto;padding:24px;color:#666;font-size:12px;
+       border-top:1px solid #ddd}
+a{color:#1F3A5F}
+small{color:#666}
+code{background:#eee;padding:1px 5px;border-radius:3px;
+     font-family:ui-monospace,Consolas,monospace;font-size:13px}
+.demo{background:#eef4fb;border:1px solid #c3d7ee;border-radius:8px;
+      padding:16px;margin:14px 0}
+</style></head><body>
+<header><div class="wrap">
+<h1>Cotiza planos en minutos, con la cuenta a la vista</h1>
+<p>Herramienta de takeoff y presupuesto de obra para contratistas y
+estimadores en México. Cada cifra muestra de qué entidad del plano salió.</p>
+</div></header>
+<main>
+
+<h2>El problema</h2>
+<div class="card">
+<p>Medir planos cuesta tiempo y los errores salen caros. Hoy se mide a ojo, con
+regla y calculadora, o con un programa que cuesta más de lo que justifica el
+trabajo.</p>
+<p>Peor: cuando una herramienta se equivoca, el error es invisible. Un total
+que parece correcto y está mal no genera ninguna duda. La pérdida aparece meses
+después, en la obra.</p>
+<p>Esta herramienta está construida al revés: <b>muestra cuándo no sabe</b>.</p>
+</div>
+
+<h2>Qué hace</h2>
+<ul>
+<li>Lee planos <b>DXF</b> y <b>PDF vectorial</b>, clasifica por capa y calcula
+áreas, longitudes y conteos.</li>
+<li>Mapea las capas a conceptos de obra con un catálogo que <b>editas tú</b>.</li>
+<li>Marca cada partida con el <b>handle</b> de la entidad DXF que la produjo, para
+rastroarla hasta el plano.</li>
+<li>Exporta a <b>Excel y PDF</b> con subtotal, IVA y el detalle de lo que no pudo
+medir.</li>
+</ul>
+
+<div class="demo">
+<b>Ver la demostración pública</b><br>
+Un plano real que <b>no</b> se puede medir y por qué, un plano que sí, el cálculo
+a mano de partidas comparado contra la salida de la herramienta, y la lista de
+lo que no sabe hacer.<br>
+<a href="demo.html">→ Abrir la demostración</a>
+</div>
+
+<h2>Lo que incluye y lo que no</h2>
+<table>
+<tr><th>Sí</th><th>No</th></tr>
+<tr><td>
+Lectura de DXF<br>
+Lectura de PDF vectorial<br>
+Clasificación por capa<br>
+Áreas, longitudes y conteos<br>
+Catálogo de conceptos editable<br>
+Trazabilidad por handle<br>
+Excel y PDF con IVA<br>
+Avisos de lo no medido<br>
+Marcado de total incompleto<br>
+Interfaz web
+</td><td>
+Planos escaneados (no hay OCR)<br>
+DWG sin instalar ODA File Converter<br>
+Precios incluidos<br>
+Detección automática de escala<br>
+Reconstrucción de capas de CAD en PDF<br>
+Gestión de clientes u obras<br>
+App móvil
+</td></tr>
+</table>
+
+<h2>Limitaciones</h2>
+<div class="no">
+<p><b>No se ha procesado ningún plano de obra real.</b> Todo lo verificado usa
+planos sintéticos y dos planos reales de archivo público.</p>
+<p>Los precios de la demostración son <b>de ejemplo</b>. No son precios de
+mercado: no hay fuente pública verificada de precios de obra en México.</p>
+<p><b>No es un software de certificación ni sustituye el criterio de un
+estimador.</b> Úsala para calcular y para revisar; la decisión de qué cotizar y
+a qué precio es tuya.</p>
+</div>
+
+<h2>Cómo se usa</h2>
+<div class="card">
+<p>Se ejecuta en tu propia máquina. No hay cuentas ni servicios externos.</p>
+<pre style="background:#fff;border:1px solid #ddd;border-radius:6px;
+     padding:12px;overflow-x:auto;font-size:.85rem"><code>python -m venv .venv
+pip install -r requirements.txt
+python -m uvicorn app.web:app --port 8000</code></pre>
+<p>Y abre <code>http://127.0.0.1:8000</code>.</p>
+</div>
+
+<h2>Qué pasa con tu archivo</h2>
+<div class="card">
+<ul class="silencio" style="padding-left:1.2em">
+<li>Se procesa <b>en memoria</b>. No se escribe a disco.</li>
+<li>Los resultados se guardan solo en memoria mientras la sesión esté abierta.</li>
+<li>No hay cuentas, ni base de datos, ni envío a terceros, ni analítica.</li>
+</ul>
+</div>
+
+<h2>Reportar un problema</h2>
+<div class="card">
+<p>En la pantalla de trabajo hay un botón <b>Reportar un problema con este
+plano</b>. Genera un texto con los datos técnicos de esa corrida y lo copia al
+portapapeles. <b>No envía nada a ningún servidor</b> y <b>no adjunta el plano</b>.</p>
+</div>
+
+<h2>Licencia y créditos</h2>
+<div class="card">
+<p><b>MIT.</b> Puedes leer el código, modificarlo y redistribuirlo.</p>
+<p>Los planos de ejemplo tienen licencia propia: uno es de dominio público y
+otro es CC BY-SA 4.0. Fuentes en
+<a href="../docs/FUENTES.md">docs/FUENTES.md</a>.</p>
+<p>Librerías: ezdxf, shapely, pdfplumber, openpyxl, reportlab, fastapi,
+uvicorn. Todas MIT o BSD.</p>
+</div>
+
+<footer>
+Generado el 2026-10-17 · <a href="demo.html">demostración</a> ·
+<a href="../docs/CASO_ESTUDIO.md">caso de estudio</a> ·
+<a href="../docs/FUENTES.md">fuentes y licencias</a> ·
+<a href="../README.md">README</a><br>
+Software libre y gratuito. Sin usuarios registrados y sin validación con
+planos de obra reales.
+</footer>
+</body></html>

@@ -1,0 +1,124 @@
+name: Un plano no se midió
+description: Una parte del plano no se midió, o el resultado no cuadra con lo esperado
+title: "[plano] "
+labels: ["bug", "necesita-datos"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por mirarlo.
+
+        ## **No adjuntes el plano.**
+
+        No hace falta y casi nunca se debe. Si el plano es confidencial, este
+        proyecto no lo necesita: describe su estructura con las casillas de
+        abajo y ya.
+
+        Con nombre de capa, formato y escala se reproducen la mayoría de los
+        casos. Si hace falta ver un fragmento, recorta una imagen de la zona
+        del problema **sin datos ni nombres de cliente**.
+
+  - type: input
+    id: formato
+    attributes:
+      label: ¿En qué formato viene el plano?
+      placeholder: "DXF, PDF vectorial, PDF escaneado, o DWG"
+    validations:
+      required: true
+
+  - type: input
+    id: software
+    attributes:
+      label: ¿Con qué software se hizo el plano?
+      description: "Ayuda mucho: AutoCAD, Revit, Civil 3D, ArchiCAD, escaneo, otro."
+      placeholder: "AutoCAD 2021"
+    validations:
+      required: true
+
+  - type: textarea
+    id: version_software
+    attributes:
+      label: Versión del software, si la sabes
+    validations:
+      required: false
+
+  - type: input
+    id: unidades
+    attributes:
+      label: Unidades del archivo (solo DXF y DWG)
+      description: "Busca $INSUNITS en el DXF, o mira el separador decimal."
+      placeholder: "m, mm, cm"
+    validations:
+      required: false
+
+  - type: input
+    id: escala
+    attributes:
+      label: Escala
+      description: >-
+        Para DXF/DWG, la escala de dibujo. Para PDF, cuántos puntos del PDF
+        equivalen a un metro. Si no la sabes, dilo: es información útil.
+      placeholder: "1:50, o 28.35 puntos por metro"
+    validations:
+      required: false
+
+  - type: textarea
+    id: capas
+    attributes:
+      label: ¿Qué capas tiene el plano y cómo se llaman?
+      description: >-
+        Los nombres exactos. Si el plano se dibuja por plantas (plano de
+        proyecto, plano de albañilería…), indícalo: es el caso donde las
+        capas más se confunden.
+      placeholder: |
+        - MURO-BLOCK-15CM (polilínea cerrada)
+        - PISO-VINILICO (hatch)
+        - VENTANA-A1 (bloque)
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: esperado
+    attributes:
+      label: ¿Qué esperabas y qué obtuviste?
+      description: >-
+        Si tienes un valor de referencia, ponlo. Ojo: no hace falta que sea
+        un presupuesto, con la medida a mano basta.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: aviso
+    attributes:
+      label: ¿Qué aviso te salió en pantalla?
+      description: >-
+        La app lo muestra debajo del total. Cópialo tal cual si puedes.
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: reporte
+    attributes:
+      label: Reporte generado (opcional, muy útil)
+      description: >-
+        La pantalla de resultados tiene un botón **"¿Algo salió mal?"** que
+        genera un texto con los datos técnicos de la corrida. Pégalo aquí.
+
+        Es un texto que copias tú a mano: **no envía nada a ningún servidor y
+        no adjunta el plano**, solo el nombre del archivo y las cifras medidas.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: sin_plano
+    attributes:
+      label: Antes de enviar
+      options:
+        - label: No he adjuntado el plano ni datos de cliente.
+          required: true
+        - label: He comprobado que la captura, si la subo, no tiene nombres ni datos de clientes.
+          required: false

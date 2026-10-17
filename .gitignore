@@ -1,0 +1,103 @@
+# ============================================================================
+# .gitignore de "Medir planos" 0.1.0
+#
+# Idea central: este proyecto tiene planos DENTRO del arbol, porque las
+# pruebas y la demo los necesitan. Un *.dxf global los borraria y un clon
+# nuevo no tendria nada que medir. Por eso se ignoran los planos por
+# defecto y despues se vuelven a dejar pasar, uno por uno, los que de
+# verdad son parte del codigo.
+#
+# Regla practica: ante la duda, NO ignorar. Es preferible tener un archivo
+# de mas en el arbol que romper el clon de otra persona.
+# ============================================================================
+
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Secretos y datos locales --------------------------------------------
+# Si alguien guarda algo aqui, no debe subir nunca.
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.json
+config.local.json
+
+# --- Base de datos -------------------------------------------------------
+# El proyecto no usa ninguna. Si aparece, es de otra cosa y no se versiona.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# --- Salidas generadas ---------------------------------------------------
+salida/
+salida_web/
+out/
+*.xlsx
+*.xls
+
+# Catalogo de precios de ejemplo que se regenera al construir el sitio.
+# No es entrada del repositorio: scripts/generar_demo.py lo escribe.
+publico/assets/catalogo_ejemplo.json
+
+# Artefactos de la verificacion en navegador. Las capturas PNG SI se
+# versionan: son la evidencia que sostiene docs/VERIFICACION.md.
+docs/capturas/*.xlsx
+docs/capturas/*.pdf
+playwright-report/
+test-results/
+
+# --- Planos --------------------------------------------------------------
+# Primero se ignoran todos. Un plano de cliente es confidencial, puede ser
+# grande y no tiene por que estar en un repositorio.
+*.dxf
+*.dwg
+*.pdf
+
+# Despues se dejan pasar SOLO los que las pruebas y la demo necesitan.
+# Todos son sinteticos o de archivo publico con licencia registrada en
+# docs/FUENTES.md. No contienen obra real de ningun cliente.
+#
+# !planes/** en vez de !planos/*.dxf a proposito: la regla de un solo nivel
+# se saltaba planos/casos/, que es justo donde viven los casos limite.
+!planos/**/*.dxf
+!tests/fixtures/**/*.dxf
+!tests/fixtures/**/*.dwg
+!tests/fixtures/**/*.pdf
+
+# Catálogos con precios del usuario: se regeneran con
+# scripts/generar_plantilla_precios.py y no son del proyecto.
+# OJO: catalogo/demo_precios.json SI se versiona; lo consume la demo.
+catalogo/mi_precios.json
+
+# --- Sistema y editores --------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- Ruido de trabajo ----------------------------------------------------
+*.log
+*.tmp
+*.bak
+chk.txt
+freeze.txt
+pkgs.txt

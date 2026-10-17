@@ -1,0 +1,253 @@
+{
+  "_meta": {
+    "version": "0.2.0",
+    "moneda": "MXN",
+    "avisos": [
+      "Los precios NO vienen incluidos. El usuario debe cargarlos antes de usar el presupuesto.",
+      "El motor marca como FALTA_PRECIO todo concepto sin precio_unitario y NO lo totaliza.",
+      "Las expresiones regulares (patron_capa) mapean nombres de capa a conceptos.",
+      "Los patrones se evalúan en orden; gana la primera coincidencia (case-insensitive).",
+      "Ordenar por prioridad descendente antes de usar: los patrones específicos van primero.",
+      "capas_no_medibles: capas que NUNCA deben mapearse a un concepto, aunque su nombre coincida con un patron. Sirven para evitar falsos positivos: 'NOTAS-MUROS' no es un muro de block."
+    ],
+    "capas_no_medibles": [
+      { "patron": "(?i)(NOTAS?|TEXTOS?|ROTULOS?|TXT|DIM|COTAS?|LEYENDA|MARCA)", "motivo": "capa de anotacion, no geometria de obra" },
+      { "patron": "(?i)^(PLANTA[_ -]?(ALTA|BAJA|PISO|N[0-9])|NIVEL[_ -]?[0-9]|LEVEL[_ -]?[0-9])", "motivo": "capa organizativa por planta, sin contenido semantico" },
+      { "patron": "(?i)(ESTRUCT.*(COLUMN|COLUMNA|PILAR|CIMIENT|LOADO))", "motivo": "estructura: no es un concepto de acabado, se cotiza aparte" },
+      { "patron": "(?i)(PERIMETRO|PROYECCION|CORTE|SECCION|ESTIMADO)", "motivo": "plano de apoyo, no contiene cantidades de acabado" }
+    ]
+  },
+  "conceptos": [
+    {
+      "clave": "MUR_BLOCK_15",
+      "nombre": "Muro de block de 15 cm",
+      "unidad": "m2",
+      "categoria": "Muros",
+      "patron_capa": "(?i)(MURO.*(BLOCK|BLOQ|BNM|TAB\\b|15)|(^|[^A-Z])BLK)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Incluye mezcla yBlocks. No incluye acabado."
+    },
+    {
+      "clave": "TABA_10",
+      "nombre": "Tabique de gypsum de 10 cm",
+      "unidad": "m2",
+      "categoria": "Muros",
+      "patron_capa": "(?i)(TABA|TABIQUE|PY(M|D))",
+      "prioridad": 55,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Incluye panel, masilla, cinta y pintura de gypsum."
+    },
+    {
+      "clave": "LOSETA",
+      "nombre": "Piso de loseta",
+      "unidad": "m2",
+      "categoria": "Pisos",
+      "patron_capa": "(?i)(LOSETA|PISO.*LOS|CERAM)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.08,
+      "notas": "rendimiento 1.08 incluye 8% de merma/corte."
+    },
+    {
+      "clave": "VINI",
+      "nombre": "Piso vinílico",
+      "unidad": "m2",
+      "categoria": "Pisos",
+      "patron_capa": "(?i)(VINIL|VINI[L]|PVC.*PISO)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.05,
+      "notas": ""
+    },
+    {
+      "clave": "CONCRETO_PISO",
+      "nombre": "Losa de concreto",
+      "unidad": "m2",
+      "categoria": "Pisos",
+      "patron_capa": "(?i)(CONCRETO|CONC).*(PISO|LOSA)",
+      "prioridad": 60,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "No incluye acabado de piso."
+    },
+    {
+      "clave": "CIELO_YESO",
+      "nombre": "Cielo de yeso",
+      "unidad": "m2",
+      "categoria": "Cielos",
+      "patron_capa": "(?i)(CIELO|PLAFOND|PLAFON)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": ""
+    },
+    {
+      "clave": "PINTURA",
+      "nombre": "Pintura",
+      "unidad": "m2",
+      "categoria": "Acabados",
+      "patron_capa": "(?i)(PINT|MURO.*FIN|PARAPETO.*FIN)",
+      "prioridad": 40,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Aplicar sobre superficie terminada."
+    },
+    {
+      "clave": "TUBO_ELEC",
+      "nombre": "Tubería eléctrica (con canalización)",
+      "unidad": "m",
+      "categoria": "Instalaciones eléctricas",
+      "patron_capa": "(?i)(ELEC.*(CANAL|CONDUIT)|CANAL.*ELEC|TUBO.*(ELEC|CONDUIT)|CANALIZ)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.1,
+      "notas": "Rendimiento incluye 10% por tirado en esquinas y curvas."
+    },
+    {
+      "clave": "LAMPARA",
+      "nombre": "Luminaria",
+      "unidad": "pza",
+      "categoria": "Instalaciones eléctricas",
+      "patron_capa": "(?i)(LAMP|LUMIN)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Incluye instalación; no incluye electromecanismo de obra."
+    },
+    {
+      "clave": "TABLERO",
+      "nombre": "Tablero de distribución",
+      "unidad": "pza",
+      "categoria": "Instalaciones eléctricas",
+      "patron_capa": "(?i)(TABLERO|TAB[-_. ]?(DIST|DISTRIBUC)|CENTRO.*CARGA|GDL|(^|[-_ ])A[-_ ]?C[-_ ]?0?1($|[-_ ]))",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": ""
+    },
+    {
+      "clave": "TUBO_HIDRO",
+      "nombre": "Tubería hidráulica",
+      "unidad": "m",
+      "categoria": "Instalaciones hidráulicas",
+      "patron_capa": "(?i)(PLOM|HIDRO|HID[-_ ]?SAN|TUBO.*(AGUA|HID)|AGUA.*TUBO|(^|[^A-Z])TAR([^A-Z]|$))",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.15,
+      "notas": "Rendimiento incluye 15% por cortes y accesorios."
+    },
+    {
+      "clave": "COLADERA",
+      "nombre": "Coladera",
+      "unidad": "pza",
+      "categoria": "Instalaciones hidráulicas",
+      "patron_capa": "(?i)(COLAD|COLADERA|REGADERA)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": ""
+    },
+    {
+      "clave": "VENTANA",
+      "nombre": "Ventana",
+      "unidad": "pza",
+      "categoria": "Carpintería",
+      "patron_capa": "(?i)(VENTANA|VENTAN|CARPIA)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": ""
+    },
+    {
+      "clave": "PUERTA",
+      "nombre": "Puerta",
+      "unidad": "pza",
+      "categoria": "Carpintería",
+      "patron_capa": "(?i)(PUERTA|ACCESO.*PRINC)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": ""
+    },
+    {
+      "clave": "ESCALERA",
+      "nombre": "Escalera",
+      "unidad": "ml",
+      "categoria": "Circulación",
+      "patron_capa": "(?i)(ESCALER|ESC)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Se mide por desarrollo (ml)."
+    },
+    {
+      "clave": "MURO_GENERICO",
+      "nombre": "Muro (acabado por definir)",
+      "unidad": "m2",
+      "categoria": "Muros",
+      "patron_capa": "(?i)(MURO|MURO|MUR)",
+      "prioridad": 20,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Concepto de reserva para muros que no especifican material. BAJA PRIORIDAD a proposito: los patrones especificos (block, tabique) ganan."
+    },
+    {
+      "clave": "PORCELANATO",
+      "nombre": "Piso de porcelanato",
+      "unidad": "m2",
+      "categoria": "Pisos",
+      "patron_capa": "(?i)(PORCELANATO|PORCEL)",
+      "prioridad": 52,
+      "precio_unitario": null,
+      "rendimiento": 1.08,
+      "notas": "rendimiento 1.08 incluye 8% de merma/corte."
+    },
+    {
+      "clave": "CABLE_ELEC",
+      "nombre": "Cable eléctrico (conductor)",
+      "unidad": "m",
+      "categoria": "Instalaciones eléctricas",
+      "patron_capa": "(?i)(CABLE|CONDUCTOR|ALIMENT|CIRCUITO)",
+      "prioridad": 45,
+      "precio_unitario": null,
+      "rendimiento": 1.15,
+      "notas": "Incluye el conductor, no el tubo. Rinde 1.15 por tirados y curvas."
+    },
+    {
+      "clave": "CONTACTO",
+      "nombre": "Contacto (tomacorriente)",
+      "unidad": "pza",
+      "categoria": "Instalaciones eléctricas",
+      "patron_capa": "(?i)(CONTACTO|TOMA|TOMACORRIENTE|SALIDA|DUPLEX|SWITCH|TABLERO.B)",
+      "prioridad": 45,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": "Si la capa mezcla contactos y apagadores, separarla."
+    },
+    {
+      "clave": "DUCTO",
+      "nombre": "Ducto de aire",
+      "unidad": "m2",
+      "categoria": "Instalaciones mecánicas",
+      "patron_capa": "(?i)(DUCTO|DIFUSOR|REJILLA|SUP[A-Z]?\\b)",
+      "prioridad": 45,
+      "precio_unitario": null,
+      "rendimiento": 1.1,
+      "notas": "Los ductos rectangulares se cotizan por su desarrollo (m2 de las 4 caras) o por metro lineal segun la practica del despacho."
+    },
+    {
+      "clave": "AZOTEA",
+      "nombre": "Azotea / impermeabilización",
+      "unidad": "m2",
+      "categoria": "Cubierta",
+      "patron_capa": "(?i)(AZOTEA|IMPERMEAB|CUBIERTA|LOJA|CARPETA)",
+      "prioridad": 50,
+      "precio_unitario": null,
+      "rendimiento": 1.0,
+      "notas": ""
+    }
+  ]
+}

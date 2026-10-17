@@ -1,0 +1,85 @@
+name: Publicar sitio estatico
+
+# Publica la carpeta publico/ en GitHub Pages: la demostracion, la pagina de
+# entrada, el kit y la documentacion. Es la OPCION A de las dos posibles, y
+# la unica activa por defecto.
+#
+# ESTA NO VERIFICADA. No se puede probar sin un repositorio real en GitHub y
+# Pages activado en Ajustes > Pages > Source: GitHub Actions. Solo se sabe
+# que el YAML es valido y que lo que se publica se genera localmente con:
+#
+#     python scripts/generar_publico.py
+#     python scripts/generar_demo.py
+#
+# Antes de dar por buena la opcion A hay que confirmar en el repositorio:
+#   1. Settings > Pages > Source = "GitHub Actions"
+#   2. este workflow corre en verde en la rama principal
+#   3. https://USUARIO.github.io/REPO/ abre la demo
+#
+# La opcion B (app completa en un servicio gratuito) NO esta configurada a
+# proposito. Va documentada en el README con sus limites reales.
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "publico/**"
+      - "scripts/generar_publico.py"
+      - "scripts/generar_demo.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Nunca dos publicaciones a la vez sobre el mismo sitio.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      # Se regenera en CI en vez de subir lo que hay en el arbol, para que
+      # la pagina publicada nunca pueda estar desfasada respecto al codigo.
+      - name: Regenerar el sitio
+        run: |
+          python scripts/generar_publico.py
+          python scripts/generar_demo.py
+
+      # El sitio publico no puede mentir. Las mismas comprobaciones que
+      # protecting la suite de pruebas.
+      - name: Comprobar el contenido publicado
+        run: python -m pytest tests/test_publico.py -q
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: publico
+
+  desplegar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

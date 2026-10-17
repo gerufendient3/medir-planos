@@ -1,0 +1,60 @@
+name: Pruebas
+
+# Corre la suite en cada push y en cada pull request.
+#
+# No hay paso de red ni servicios externos: la suite debe pasar sola, con lo
+# que hay en requirements.txt. Un workflow que depende de la red puede
+# fallar por causas que no son del código y ensuciar la señal.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pruebas:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        # Solo las dos versiones verificadas de verdad en local: 3.12.10 y
+        # 3.15.0, ambas con la suite completa en verde desde un venv limpio.
+        # No se anade 3.11 porque no se ha probado: declararla sin evidencia
+        # seria repetir el error que este proyecto evita en todas partes.
+        python: ["3.12", "3.15"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Python ${{ matrix.python }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      # La version minima declarada es 3.12. No se prueba 3.11 ni menor:
+      # en esas versiones shapely 2.2 y reportlab 5 pueden no tener ruedas y
+      # compilan desde el codigo fuente, lo que no se ha comprobado aqui.
+      - name: Suite completa
+        run: python -m pytest tests -q
+
+      - name: Auditoría del catálogo
+        run: python scripts/auditar_catalogo.py
+
+      - name: Verificar fuentes (sin red)
+        run: python scripts/verificar_fuentes.py
+
+      - name: Verificar el índice de casos
+        run: python scripts/verificar_casos.py
+
+      # Comprueba la promesa de privacidad mas fuerte: procesar un plano no
+      # deja archivos en TEMP. Corre la suite otra vez para tener un antes y
+      # un despues en el mismo directorio temporal.
+      - name: Comprobar que no quedan archivos temporales
+        run: python scripts/comprobar_temporal.py

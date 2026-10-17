@@ -1,0 +1,46 @@
+# Dependencias de "Medir planos" 0.1.0
+#
+# Python minimo: 3.12. Verificado en 3.12.10 y 3.15.0, ambas con la suite
+# completa en verde desde un entorno limpio en Windows.
+#
+# Las dependencias DIRECTAS van fijadas (==) para que una instalacion sea
+# predecible. Las transitivas NO se fijan: una version puede no existir en
+# otra plataforma y declararla a mano hace el archivo mas fragile de lo que
+# ayuda. Para reproduccion exacta en otro entorno, usa requirements.lock.txt,
+# generado con scripts/generar_lock.py desde un entorno ya verificado.
+#
+# Licencias: todas las directas son permisivas (MIT, BSD o Apache-2.0).
+# La unica copyleft es certifi (MPL-2.0), transitiva de httpx, que solo se
+# usa en las pruebas. Tabla completa en el README y en docs/FUENTES.md.
+#
+# Para actualizar: cambia la version, reinstala en un entorno limpio, corre
+# la suite completa y regenera el lock.
+
+# --- Núcleo del formato DXF ---
+ezdxf==1.4.5
+shapely==2.2.0
+
+# --- PDF vectorial ---
+pdfplumber==0.11.10
+
+# --- Exportación ---
+openpyxl==3.1.5
+reportlab==5.0.1
+pypdf==6.21.1
+
+# --- Interfaz web ---
+fastapi==0.143.3
+uvicorn==0.54.0
+python-multipart==0.0.32
+
+# --- Solo para correr la suite y generar fixtures ---
+# No hacen falta para USAR la app. httpx entra por starlette.testclient.
+pytest==9.1.1
+httpx==0.28.1
+matplotlib==3.11.2
+
+# Las transitivas NO se declaran: las resuelve pip. Fijarlas a mano se
+# equivoca (una version puede no existir en otra plataforma) y hace que el
+# archivo sea mas fragil de lo que ayuda. Para reproduccion exacta en otro
+# entorno usa requirements.lock.txt, generado con scripts/generar_lock.py
+# desde un entorno ya verificado.
