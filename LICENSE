@@ -1,17 +1,6 @@
-> **ESTADO: PROPUESTA, PENDIENTE DE CONFIRMACIÓN.**
->
-> MIT es la licencia propuesta para este proyecto. El texto de abajo es el de
-> MIT, sin cambios, pero **todavía no se ha confirmado** por quien lo publica.
-> No se distribuya el proyecto como si ya estuviera confirmado hasta que se
-> decida. El estado vive en `app/identidad.py`, en `LICENCIA_CONFIRMADA`.
->
-> El pie de la interfaz y el README muestran la misma marca: "MIT
-> (propuesta)". Si se cambia de licencia, hay que cambiar los tres sitios a la
-> vez: este archivo, `app/identidad.py` y el README.
-
 MIT License
 
-Copyright (c) 2026 Medir planos contributors
+Copyright (c) 2026 LuisF
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

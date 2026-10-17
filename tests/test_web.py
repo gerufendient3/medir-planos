@@ -419,21 +419,58 @@ def test_no_hay_url_de_repositorio_inventada():
 
     html = client.get("/").text
     assert "github.com/USUARIO" not in html
-    assert "github.com/" not in html or identidad.REPO_CONFIRMADO
-    if not identidad.REPO_CONFIRMADO:
-        assert identidad.REPO_URL == "PENDIENTE_REPO_URL"
-        assert "PENDIENTE_REPO_URL" in html
+    assert identidad.REPO_URL == "https://github.com/LuisF/medir-planos"
+    assert identidad.REPO_URL in html
+
+    # La URL sale de app.identidad y la interfaz la usa tal cual: si alguien
+    # escribe una URL a mano en el HTML, esta prueba deja de cuadrar.
+    resultados = _subir(PLANO_DXF).text
+    assert 'href="{}?title='.format(identidad.REPO_ISSUE) in resultados
 
 
-def test_el_boton_de_issue_avisa_si_no_hay_repo():
+def test_el_boton_de_issue_va_al_repositorio_confirmado():
     from app import identidad
 
     r = _subir(PLANO_DXF)
-    if identidad.reporte_issue_habilitado():
-        assert "issues/new" in r.text
-    else:
-        assert "issues/new" not in r.text
-        assert "URL del repositorio" in r.text
+    # El enlace lleva ?title=...&body=... detrás, así que se comprueba que
+    # la URL real es el prefijo y no algo escrito a mano en el HTML.
+    assert 'href="{}?title='.format(identidad.REPO_ISSUE) in r.text
+    assert identidad.REPO_ISSUE.startswith("https://github.com/")
+
+
+def test_no_queda_el_marcador_de_repositorio_pendiente():
+    """PENDIENTE_REPO_URL no puede sobrevivir a la publicación.
+
+    Se comprueba en el árbol entero, no solo en la interfaz: un marcador a
+    medias en un comentario o en la documentación dice lo mismo de menos.
+
+    Este archivo queda fuera del recorrido porque contiene el texto que
+    busca. Es la única excepción, y está justificada en la línea de abajo.
+    """
+    MARCADOR = "PENDIENTE_REPO_URL"
+    uno_mismo = Path(__file__).resolve()
+
+    pendientes = []
+    for f in RAIZ.rglob("*"):
+        if not f.is_file():
+            continue
+        if f.resolve() == uno_mismo:
+            continue
+        if any(p in {"__pycache__", ".git", ".pytest_cache", ".venv"}
+               for p in f.parts):
+            continue
+        if f.suffix.lower() not in {".py", ".md", ".json", ".html", ".yml"}:
+            continue
+        try:
+            texto = f.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+        if MARCADOR in texto:
+            pendientes.append(f.relative_to(RAIZ).as_posix())
+
+    assert not pendientes, (
+        "quedan archivos con el marcador {}: {}. Se quitó al confirmar el "
+        "repositorio; no debe volver a aparecer.".format(MARCADOR, pendientes))
 
 
 def test_la_version_es_semver_inicial():
@@ -444,15 +481,31 @@ def test_la_version_es_semver_inicial():
         "una versión inicial debe ser 0.x: no promete estabilidad"
 
 
-def test_la_licencia_mit_esta_marcada_como_propuesta():
+def test_la_licencia_mit_esta_confirmada():
+    """MIT se confirmó antes de publicar. El pie ya no dice "propuesta".
+
+    Comprueba también que la licencia del código y la del archivo LICENSE
+    digan lo mismo: si divergen, el repositorio miente en su cabecera.
+    """
     from app import identidad
 
     assert identidad.LICENCIA == "MIT"
-    # No se puede publicar con la licencia sin confirmar.
-    assert identidad.LICENCIA_CONFIRMADA is False
-    assert "propuesta" in identidad.AVISO_LICENCIA
+    assert identidad.LICENCIA_CONFIRMADA is True
+    assert identidad.AVISO_LICENCIA == "MIT"
+
     html = client.get("/").text
-    assert "propuesta" in html
+    assert "Licencia MIT" in html
+    # Y el rótulo de propuesta ya no aparece en ninguna parte.
+    assert "propuesta" not in html.lower()
+
+    licencia = (RAIZ / "LICENSE").read_text(encoding="utf-8")
+    assert licencia.startswith("MIT License")
+    assert "propuesta" not in licencia.lower()
+    assert "Copyright (c) 2026 LuisF" in licencia
+
+    readme = (RAIZ / "README.md").read_text(encoding="utf-8")
+    assert "**MIT.**" in readme
+    assert "propuesta, pendiente de confirmación" not in readme
 
 
 def test_no_se_declara_validado_en_lugar_ninguno():

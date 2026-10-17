@@ -9,7 +9,7 @@ la herramienta como lista para usar: no hay base para decirlo.
 
 - Versión declarada en `app/identidad.py`: `VERSION = "0.1.0"`
 - Commit de esta versión: `54b397f` (rama `main`, 97 archivos versionados)
-- Suite: **194 pruebas en verde**
+- Suite: **197 pruebas en verde**
 - Sin remoto configurado. **No se ha publicado nada.**
 
 ---
@@ -73,74 +73,60 @@ cierta.
 
 ---
 
-## 3. Decisiones pendientes
+## 3. Decisiones aplicadas
 
-Las siete decisiones llegaron sin rellenar. **Ninguna se aplicó.** Se
-mantiene todo en su estado declarado:
+Las siete decisiones se recibieron y se aplicaron:
 
-| Decisión | Valor recibido | Qué se mantiene | Dónde vive |
-|---|---|---|---|
-| Licencia | `{{LICENCIA}}` sin rellenar | MIT como **propuesta**, `LICENCIA_CONFIRMADA = False` | `LICENSE`, `app/identidad.py:27`, `README.md:296` |
-| Titular y año | `{{TITULAR_Y_ANIO}}` sin rellenar | Sin titular inventado | `LICENSE:3` |
-| Repositorio | `{{REPO}}` sin rellenar | `REPO_URL = "PENDIENTE_REPO_URL"` | `app/identidad.py:37` |
-| Visibilidad | `{{VISIBILIDAD}}` sin rellenar | Sin decidir; no se tocó la configuración de publicación | — |
-| Alojamiento | `{{ALOJAMIENTO}}` sin rellenar | Opción A (sitio estático) configurada; B documentada sin configurar | `.github/workflows/pages.yml`, `README.md` |
-| Límite de subida | `{{LIMITE_MB}}` sin rellenar | 80 MB, declarado como supuesto | `app/identidad.py:70` |
-| Plano de obra real | `{{PLANO_REAL}}` sin rellenar | Ninguno procesado | — |
+| Decisión | Valor | Dónde vive |
+|---|---|---|
+| Licencia | **MIT**, confirmada | `LICENSE`, `LICENCIA_CONFIRMADA = True` en `app/identidad.py` |
+| Titular y año | **LuisF, 2026** | `LICENSE` |
+| Repositorio | **https://github.com/LuisF/medir-planos** | `REPO_URL` y `REPO_CONFIRMADO = True` en `app/identidad.py` |
+| Visibilidad | **Pública**, activada a mano por quien publica | No hay nada en el repositorio que la fije: es una acción en GitHub |
+| Alojamiento | **Opción A**: GitHub Pages para la demo y la documentación. La app se ejecuta en local clonando el repositorio. | `.github/workflows/pages.yml` |
+| Límite de subida | **80 MB**, sin cambios, sigue declarado como supuesto | `TAMANO_MAX_MB` en `app/identidad.py` |
+| Plano de obra real | **Ninguno.** Se mantiene el aviso de no validación. | — |
 
-Consecuencia de que sigan pendientes: **la interfaz no muestra enlace para
-reportar un problema**, porque no hay dónde enviarlo. Muestra
-`código (PENDIENTE_REPO_URL)` y lo explica. Esto es deliberado: es preferible
-un texto honesto a un enlace que lleva a la nada.
+La interfaz ya enlaza al repositorio real y el botón de reportar un problema
+abre una incidencia con los datos técnicos de la corrida.
+
+**Lo que sigue sin cerrar: el plano de obra real.** Ninguna de las otras seis
+decisiones lo compensa.
 
 ---
 
-## 4. Pasos exactos para publicar
+## 4. Pasos que quedan
 
-Cuando decidas las siete decisiones. En este orden.
+Los dos marcadores ya están resueltos y aplicados. Falta la parte que solo se
+puede hacer desde GitHub.
 
-### 4.1 Cambiar los dos marcadores
+### 4.1 Nada que cambiar en el código
 
-`app/identidad.py`:
+`REPO_URL` y `LICENCIA_CONFIRMADA` ya tienen su valor final. La suite lo
+comprueba: si alguien los cambia por un valor a medias, falla.
 
-```python
-REPO_URL = "https://github.com/TU_USUARIO/TU_REPOSITORIO"
-REPO_CONFIRMADO = True
+### 4.2 Crear el repositorio
 
-LICENCIA_CONFIRMADA = True
-```
+En <https://github.com/new>, **sin** marcar "Initialize with a README": el
+repositorio local ya tiene todo. Nombre y usuario: `LuisF/medir-planos`.
 
-`LICENSE`: quita el bloque de aviso de las primeras líneas y pon titular y año
-reales en la línea de copyright.
-
-### 4.2 Comprobar que nada quedó pendiente
+### 4.2 Comprobar que nada quedó a medias
 
 ```bash
 python -m pytest tests -q
 ```
 
-Hay pruebas que fallan si se cambia `REPO_CONFIRMADO` sin poner la URL, o si
-se confirma la licencia sin tocar `LICENSE`.
+Hay pruebas que fallan si `REPO_CONFIRMADO` queda a `True` sin URL real, o si
+la licencia del código y la de `LICENSE` dejan de coincidir.
 
-### 4.3 Crear el repositorio
-
-En <https://github.com/new>, **sin** marcar "Initialize with a README": el
-repositorio local ya tiene todo.
-
-Sobre la visibilidad: si eliges **privado**, no hay que cambiar nada en la
-configuración de este repositorio; soloSettings → Danger Zone →
-Change visibility cuando quieras hacerlo público. **El sentido no se puede
-invertir sin borrar el repositorio**, así que empezar en privado es la opción
-reversible.
-
-### 4.4 Subir
+### 4.3 Subir
 
 ```bash
-git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+git remote add origin https://github.com/LuisF/medir-planos.git
 git push -u origin main
 ```
 
-### 4.5 Después de subir
+### 4.4 Después de subir
 
 1. Revisar el primer `git status`: si aparece algún plano o salida, hay que
    parar. Lo que está aquí ya pasó la verificación, pero una mirada de más no
@@ -150,6 +136,11 @@ git push -u origin main
 3. **Settings → General → Features → Issues** para habilitar las plantillas de
    `.github/ISSUE_TEMPLATE/`.
 4. Esperar a que `ci.yml` termine en verde antes de dar por buena la versión.
+
+Sobre la visibilidad: se eligió **pública**, y eso es una acción en GitHub, no
+algo que viva en el repositorio. Si en algún momento quieres volver a privado,
+está en *Settings → Danger Zone → Change visibility*. El sentido inverso, de
+privado a público, no se puede sin borrar el repositorio.
 
 ---
 

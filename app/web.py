@@ -38,9 +38,9 @@ from app.identidad import (
     NOMBRE,
     NOTA_TAMANO,
     REPO_ISSUE,
+    REPO_URL,
     TAMANO_MAX_MB,
     VERSION,
-    reporte_issue_habilitado,
 )
 from app.medidor import medir
 from app.pdf_entrada import medir_pdf
@@ -193,10 +193,12 @@ def esc(x) -> str:
 
 
 def _enlace_repo() -> str:
-    """Enlace al repositorio, o texto honesto si aún no hay URL confirmada."""
-    if reporte_issue_habilitado():
-        return f'<a href="{REPO_ISSUE.rsplit("/issues", 1)[0]}">código</a>'
-    return '<span title="Falta confirmar el repositorio">código (PENDIENTE_REPO_URL)</span>'
+    """Enlace al repositorio.
+
+    El destino sale de app.identidad: no hay ninguna URL escrita a mano en
+    esta pantalla, para que no puedan diferir.
+    """
+    return f'<a href="{REPO_URL}">código</a>'
 
 
 def _html(titulo: str, cuerpo: str) -> HTMLResponse:
@@ -823,15 +825,11 @@ document.getElementById('copiar').addEventListener('click', function () {{
 
 
 def _boton_issue(cuerpo_md: str) -> str:
-    """Enlace al issue, o un aviso si el repositorio aún no está confirmado.
+    """Enlace al issue del repositorio.
 
-    Con REPO_URL sin confirmar, un enlace a una URL inventada sería peor que
-    no tener enlace: el usuario escribiría su reporte en la nada.
+    El destino sale de REPO_ISSUE, en app.identidad. Aquí no hay ninguna URL
+    escrita a mano.
     """
-    if not reporte_issue_habilitado():
-        return ('<p class="silencio">Aún no hay URL del repositorio '
-                'configurada, así que no se puede abrir el issue. Copia el '
-                'reporte y compártelo como quieras.</p>')
     return (f'<a class="boton boton-secundario" target="_blank" rel="noopener" '
             f'href="{REPO_ISSUE}?title={_url("Problema con un plano")}'
             f'&body={_url(cuerpo_md[:1200])}">Abrir como issue (opcional)</a>')

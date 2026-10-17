@@ -1,10 +1,10 @@
 # Medir planos — takeoff y presupuesto de obra
 
-> **Prototipo en revisión — versión 0.1.0.**
-> La licencia (MIT) es una propuesta sin confirmar y el identificador del
-> repositorio está pendiente. No hay garantía de estabilidad ni de
-> disponibilidad. Lee las [limitaciones](#limitaciones--léelas-antes-de-confiar-en-un-número)
-> antes de usar un número de esta herramienta en algo que importe.
+> **Versión 0.1.0, candidata a publicación. No está validada con planos de obra
+> reales.**
+> Licencia MIT. No hay garantía de estabilidad ni de disponibilidad. Lee las
+> [limitaciones](#limitaciones--léelas-antes-de-confiar-en-un-número) antes de
+> usar un número de esta herramienta en algo que importe.
 
 Herramienta **libre, gratuita y sin cuentas** para medir planos y generar
 presupuestos de obra en pesos mexicanos. Cada cifra del presupuesto muestra el
@@ -76,7 +76,7 @@ python scripts/auditar_catalogo.py         # coherencia de los catálogos
 python scripts/verificar_fuentes.py        # docs/FUENTES.md vs. los archivos
 ```
 
-Salida esperada: **194 pruebas en verde**. Si baja, algo se rompió; la suite no
+Salida esperada: **197 pruebas en verde**. Si baja, algo se rompió; la suite no
 es decorativa.
 
 Los generadores de planos de prueba y de fixtures solo hacen falta si quieres
@@ -173,9 +173,9 @@ Cada pantalla de trabajo tiene **«¿Algo salió mal?»**. Genera un texto con l
 datos técnicos de esa corrida y lo copia al portapapeles. **No envía nada a
 ningún servidor y no adjunta el plano.**
 
-Mientras `REPO_URL` siga como `PENDIENTE_REPO_URL` en `app/identidad.py`, el
-botón de abrir un issue no aparece y se dice por qué: es mejor no tener enlace
-que llevar a un sitio inventado.
+El botón abre una incidencia en <https://github.com/LuisF/medir-planos/issues/new>,
+que es el repositorio de `app/identidad.py`. La URL no está escrita a mano en
+ninguna pantalla: sale de ahí, para que no puedan diferir.
 
 ---
 
@@ -267,16 +267,16 @@ catalogo/           conceptos (sin precios), plantilla y precios de demo
 docs/               decisiones, casos, formatos, fuentes, verificación
 publico/            demo, landing y kit (sitio estático)
 scripts/            generadores, auditorías y verificación
-tests/              194 pruebas
+tests/              197 pruebas
 ```
 
 ### Lo que se puede cambiar en un solo sitio
 
 `app/identidad.py` concentrationombre, versión, licencia, URL del
 repositorio, avisos fijos y el límite de tamaño. La interfaz, el pie de
-página, el botón de reporte y este README leen de ahí. La URL del
-repositorio está marcada `PENDIENTE_REPO_URL` a propósito: no se inventó
-ningún nombre de usuario.
+página, el botón de reporte y este README leen de ahí. Cambia ahí el nombre,
+la versión, la licencia, la URL del repositorio, los avisos fijos o el límite
+de tamaño, y el resto se entera solo.
 
 ---
 
@@ -293,11 +293,9 @@ ningún nombre de usuario.
 
 ## Licencia y créditos
 
-**MIT — propuesta, pendiente de confirmación.** El texto de `LICENSE` es el de
-MIT sin cambios, pero todavía no está confirmado. La interfaz y este README lo
-dicen en el mismo lugar para que no puedan divergir. Antes de publicar, hay que
-decidirlo y cambiar los tres sitios: `LICENSE`, `LICENCIA_CONFIRMADA` en
-`app/identidad.py` y esta sección.
+**MIT.** Titular **LuisF**, 2026. Texto completo en `LICENSE`. La interfaz, el
+pie de página y este README salen de `LICENCIA` en `app/identidad.py`, así que
+no pueden divergir.
 
 ### Créditos de las librerías
 
@@ -333,37 +331,33 @@ del gobierno de EE. UU.) y otro es **CC BY-SA 4.0**. Fuentes completas en
 
 ## Cómo subirlo a GitHub
 
-Este repositorio ya está inicializado y tiene su commit. Lo que falta es
-crear el repositorio en GitHub y conectar los dos.
+El repositorio local está listo. Lo que falta es crearlo en GitHub y conectar
+los dos.
 
-### 1. Antes de nada: dos marcadores pendientes
+### 1. Los marcadores ya están resueltos
 
-Hay dos cosas marcadas a propósito en el código. Si se publican sin
-cambiar, el repositorio queda diciendo cosas que no son ciertas.
+| Marcador | Estado |
+|---|---|
+| `REPO_URL` | `https://github.com/LuisF/medir-planos`, con `REPO_CONFIRMADO = True` |
+| `LICENCIA_CONFIRMADA` | `True`. MIT, titular LuisF, 2026 |
 
-| Marcador | Dónde | Qué hacer |
-|---|---|---|
-| `REPO_URL = "PENDIENTE_REPO_URL"` | `app/identidad.py` | Poner la URL real y poner `REPO_CONFIRMADO = True`. Hasta entonces la interfaz no muestra enlace a reportar un problema. |
-| `LICENCIA_CONFIRMADA = False` | `app/identidad.py` | Confirmar MIT (o cambiar de licencia). Requiere editar `LICENSE` también. |
-
-Cuando los cambies, `python -m pytest tests -q` avisa si se te olvidó: hay
-pruebas que comprueban ambos marcadores.
+`python -m pytest tests -q` lo comprueba: si se cambia uno sin el otro, la
+suite falla.
 
 ### 2. Crear el repositorio en GitHub
 
 En <https://github.com/new>, **sin** marcar "Initialize with a README": el
-repositorio local ya tiene todo. Usa el nombre y usuario que tú decidas.
+repositorio local ya tiene todo. Usa el nombre y usuario del encabezado de
+este README.
 
-Si lo creas como **privado**, puedes cambiarlo a público después en
-*Settings → Danger Zone → Change visibility*. Al revés no se puede sin
-borrarlo.
+Sobre la visibilidad: si lo creas como **privado**, después puedes cambiarlo
+a público en *Settings → Danger Zone → Change visibility*. **Al revés no se
+puede sin borrarlo**, así que crear en privado es la opción reversible.
 
 ### 3. Conectar y subir
 
-Sustituye `TU_USUARIO` y `TU_REPOSITORIO` por los reales:
-
 ```bash
-git remote add origin https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+git remote add origin https://github.com/LuisF/medir-planos.git
 git push -u origin main
 ```
 
@@ -379,8 +373,6 @@ de GitHub.
    lo ha corrido contra un repositorio de verdad.
 2. **Activar las incidencias**: *Settings → General → Features → Issues*.
    Las plantillas de `.github/ISSUE_TEMPLATE/` se usan en cuanto se activen.
-3. **Releer la licencia**: si confirmaste MIT, quita el aviso de "propuesta"
-   del principio de `LICENSE` y pon el año y el titular reales.
 
 ### 5. Si prefieres empezar en privado
 

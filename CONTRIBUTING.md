@@ -2,8 +2,9 @@
 
 Gracias por mirar esto. Antes de nada, el estado real del proyecto:
 
-> **Prototipo en revisión (0.1.0). No está validado con planos de obra reales.**
-> La licencia MIT es una propuesta sin confirmar.
+> **Versión 0.1.0, candidata a publicación. No está validada con planos de obra
+> reales.**
+> Licencia MIT.
 
 Si vas a usar un número de esta herramienta para cotizar a un cliente, lee
 antes la sección de [limitaciones del README](README.md#limitaciones--léelas-antes-de-confiar-en-un-número).
@@ -36,7 +37,7 @@ export PYTHONPATH="."            # Windows: $env:PYTHONPATH = "."
 python -m pytest tests -q
 ```
 
-Deben pasar **194 pruebas**. Si pasa menos o más, algo se rompió.
+Deben pasar **197 pruebas**. Si pasa menos o más, algo se rompió.
 
 Los cuatro verificadores que la suite usa por dentro, por si quieres
 correrlos sueltos:
